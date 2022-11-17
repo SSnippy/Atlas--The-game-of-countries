@@ -1,4 +1,4 @@
-6#importing modules 
+#importing modules 
 import speech_recognition as sr 
 import random 
 import pyttsx3 
