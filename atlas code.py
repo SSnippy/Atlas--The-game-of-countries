@@ -5,29 +5,24 @@ import pyttsx3
 import os 
 import time
 import cv2
+import keyboard
 
 
 
 letterchangedlist=[]
-
 engine = pyttsx3.init('sapi5') 
 voices = engine.getProperty('voices') 
-  
 #defining functions 
 def speakm(audio): 
     engine.setProperty('voice', voices[0].id) 
     engine.say(audio) 
     engine.runAndWait()
     engine.setProperty("rate",180)
- 
 def speakf(audio): 
     engine.setProperty('voice', voices[1].id) 
     engine.say(audio) 
     engine.runAndWait()
     engine.setProperty("rate",180)
-
-
- 
 def listcheck(lis):
     lisaa=globals()[lis]
     l=len(lisaa)    
@@ -43,10 +38,6 @@ def listcheck(lis):
         print(lis)
         letterchangedlist.clear()
         letterchangedlist.append(lis)
-
-
-
-  
 def setup(country,listof): 
     let.clear() 
     lastlet=country[-1] 
@@ -62,7 +53,7 @@ speakf(usercallout)
 speakf(''' 
 You go first 
 The letter is S''')                                                          #female  
-  
+
 #countries 
 a=["afghanistan","albania","algeria","andorra","angola","antigua and barbuda","argentina","armenia","australia","austria","azerbaijan","africa"] 
 b=["bahamas","bahrain","bangladesh","barbados","belarus","belgium","belize","benin","bhutan","bolivia","bosnia and herzegovina","botswana","brazil","brunei","bulgaria","burkina faso","burundi"] 
@@ -114,19 +105,17 @@ while ind1<98:
 
          
     #mic config
-    
-    country=""
-    while country=="":
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            print("listening")
-            ro = sr.Recognizer()
-            with sr.Microphone() as source:
-                global audio
-                audio = ro.listen(source)
-            countryp =ro.recognize_google(audio) 
-            countryp1=str(countryp) 
-            country=countryp1.casefold()
-    print(country) 
+    keyboard.wait('ctrl')
+    ro = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("listening")
+        audio = ro.listen(source)
+        try:
+            country =str(ro.recognize_google(audio)).casefold()
+        except:
+            print("mic error........please try again")
+    print(country)
+
     
     #players turn 
     if country!="i want to stop playing": 
